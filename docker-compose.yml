@@ -1,0 +1,40 @@
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ruha
+      POSTGRES_USER: ruha
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-change-me-for-local-dev}
+    volumes:
+      - ruha_postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ruha -d ruha"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+  app:
+    build: .
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8000:8000"
+    environment:
+      DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY:-dev-only-change-this-secret}
+      DJANGO_DEBUG: ${DJANGO_DEBUG:-1}
+      DJANGO_ALLOWED_HOSTS: ${DJANGO_ALLOWED_HOSTS:-localhost,127.0.0.1}
+      DB_NAME: ruha
+      DB_USER: ruha
+      DB_PASSWORD: ${DB_PASSWORD:-change-me-for-local-dev}
+      DB_HOST: db
+      DB_PORT: 5432
+      VAPID_PUBLIC_KEY: ${VAPID_PUBLIC_KEY:-}
+      VAPID_PRIVATE_KEY: ${VAPID_PRIVATE_KEY:-}
+      VAPID_CLAIMS_SUBJECT: ${VAPID_CLAIMS_SUBJECT:-mailto:admin@example.com}
+    volumes:
+      - ruha_private_media:/app/private-media
+volumes:
+  ruha_postgres:
+  ruha_private_media:

@@ -1,0 +1,58 @@
+{
+  "id": ".",
+  "name": "RUHA — برنامه‌ریز شخصی",
+  "short_name": "RUHA",
+  "description": "یادآور و برنامه‌ریز روزانه‌ی فارسی، خصوصی و آفلاین‌فرست",
+  "lang": "fa",
+  "dir": "rtl",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#f7f7f5",
+  "theme_color": "#f7f7f5",
+  "categories": [
+    "productivity",
+    "utilities"
+  ],
+  "shortcuts": [
+    {
+      "name": "افزودن کار",
+      "short_name": "کار جدید",
+      "url": "./index.html#add-task",
+      "icons": [
+        {
+          "src": "./static/ruha/icons/icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    }
+  ],
+  "icons": [
+    {
+      "src": "./static/ruha/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./static/ruha/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./static/ruha/icons/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "./static/ruha/icons/icon-192.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

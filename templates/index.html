@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#f7f7f5">
+  <meta name="description" content="RUHA — یادآور و برنامه‌ریز روزانه‌ی مینیمال">
+  <meta name="color-scheme" content="light dark">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="RUHA">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="apple-touch-icon" href="./static/ruha/icons/apple-touch-icon.png">
+  <link rel="stylesheet" href="./static/ruha/styles.css">
+  <title>RUHA — برنامه‌ی روزانه</title>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" href="#today" aria-label="صفحه اصلی RUHA">
+        <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 36 36"><path d="M8 27V9h9.2c4.2 0 6.7 2.2 6.7 5.7 0 2.8-1.5 4.6-4.2 5.3L27 27h-6.5l-6.4-8h-.7v8zM13.4 14v1.2h3.7c1 0 1.6-.2 1.6-.9s-.6-1-1.6-1h-3.7z" fill="currentColor"/></svg></span>
+        <span><strong>RUHA</strong><small>برنامه‌ریز شخصی</small></span>
+      </a>
+      <div class="sidebar-label">فضای من</div>
+      <nav class="main-nav" aria-label="ناوبری اصلی">
+        <button class="nav-link active" data-view="today"><span class="nav-icon" data-icon="sun"></span><span>امروز</span><kbd>۱</kbd></button>
+        <button class="nav-link" data-view="calendar"><span class="nav-icon" data-icon="calendar"></span><span>تقویم</span><kbd>۲</kbd></button>
+        <button class="nav-link" data-view="tasks"><span class="nav-icon" data-icon="check-square"></span><span>همه‌ی کارها</span><kbd>۳</kbd></button>
+        <button class="nav-link" data-view="insights"><span class="nav-icon" data-icon="chart"></span><span>آمار و عملکرد</span><kbd>۴</kbd></button>
+      </nav>
+      <div class="sidebar-label sidebar-label-row"><span>دسته‌بندی‌ها</span><button class="icon-btn tiny" id="add-category" aria-label="افزودن دسته" title="افزودن دسته"><span data-icon="plus"></span></button></div>
+      <div id="category-list" class="category-list"></div>
+      <div class="sidebar-spacer"></div>
+      <div class="sidebar-bottom">
+        <div class="sync-indicator"><span class="sync-dot"></span><span id="sync-label">ذخیره روی این دستگاه</span></div>
+        <button class="nav-link" data-view="settings"><span class="nav-icon" data-icon="settings"></span><span>تنظیمات</span></button>
+        <div class="profile-row"><div class="profile-avatar">ر</div><div class="profile-info"><strong>فضای شخصی</strong><small>خصوصی و آفلاین</small></div><button id="theme-toggle" class="icon-btn" title="تغییر تم" aria-label="تغییر تم"><span data-icon="moon"></span></button></div>
+      </div>
+    </aside>
+
+    <main class="main-area">
+      <header class="topbar">
+        <div class="topbar-leading">
+          <button class="icon-btn mobile-menu" id="mobile-menu" aria-label="باز کردن منو"><span data-icon="menu"></span></button>
+          <div class="crumb"><span>فضای من</span><span class="crumb-slash">/</span><strong id="crumb-current">امروز</strong></div>
+        </div>
+        <div class="topbar-actions">
+          <div class="search-box"><span data-icon="search"></span><input id="global-search" type="search" placeholder="جست‌وجو در کارها…" aria-label="جست‌وجو"><kbd>⌘ K</kbd></div>
+          <button class="icon-btn notification-btn" id="enable-notifications" aria-label="فعال‌سازی اعلان‌ها" title="فعال‌سازی اعلان‌ها"><span data-icon="bell"></span><i id="notification-dot"></i></button>
+          <button class="avatar-small" id="quick-profile" title="تنظیمات">ر</button>
+        </div>
+      </header>
+
+      <div class="content-wrap">
+        <section id="view-today" class="view active-view">
+          <div class="greeting-row">
+            <div><div class="eyebrow" id="today-weekday">روز بخیر</div><h1>روزت رو <span class="heading-accent">با قصد</span> بساز.</h1><p class="subheading" id="today-date-line">کارهای مهم، با آرامش و تمرکز.</p></div>
+            <div class="today-date-card"><span class="date-card-day" id="date-card-day">—</span><div><strong id="date-card-month">—</strong><small id="date-card-gregorian">—</small></div><span class="date-sun" data-icon="sun"></span></div>
+          </div>
+          <div class="overview-grid">
+            <article class="overview-card progress-card"><div class="card-title-row"><div><span class="card-overline">پیشرفت امروز</span><h3 id="today-progress-title">شروع خوبیه</h3></div><span class="soft-icon" data-icon="target"></span></div><div class="progress-content"><div class="progress-ring" id="progress-ring" style="--progress:0"><div><strong id="progress-number">۰٪</strong><small>تکمیل شده</small></div></div><div class="progress-stats"><div><span class="stat-dot black-dot"></span><span>انجام‌شده</span><strong id="done-count">۰</strong></div><div><span class="stat-dot gray-dot"></span><span>باقی‌مانده</span><strong id="left-count">۰</strong></div><div><span class="stat-dot amber-dot"></span><span>عقب‌افتاده</span><strong id="overdue-count">۰</strong></div></div></div><div class="card-footnote"><span data-icon="sparkle"></span><span id="progress-footnote">یک قدم کوچک هم ارزشمنده.</span></div></article>
+            <article class="overview-card focus-card"><div class="card-title-row"><div><span class="card-overline">زمان تمرکز</span><h3>روی چیزی که مهمه</h3></div><span class="soft-icon" data-icon="timer"></span></div><div class="focus-time" id="focus-time">۰۰:۰۰</div><div class="focus-current" id="focus-current">یک کار انتخاب کن و زمان‌سنج رو شروع کن.</div><div class="focus-controls"><select id="timer-task-select" aria-label="انتخاب کار برای زمان‌سنج"><option value="">انتخاب کار…</option></select><button class="button button-dark button-small" id="timer-toggle"><span data-icon="play"></span><span>شروع تمرکز</span></button></div><div class="focus-progress"><span id="focus-progress-fill"></span></div><div class="focus-caption"><span>زمان ثبت‌شده امروز</span><strong id="focus-today-total">۰ دقیقه</strong></div></article>
+            <article class="overview-card streak-card"><div class="card-title-row"><div><span class="card-overline">پیوستگی</span><h3>هر روز، کمی بهتر</h3></div><span class="soft-icon" data-icon="flame"></span></div><div class="streak-number"><strong id="streak-count">۰</strong><span>روز</span></div><p class="muted-small">روزهای پیاپی با حداقل یک کار انجام‌شده</p><div class="week-dots" id="week-dots"></div><div class="streak-bottom"><span>این هفته</span><strong id="week-done-count">۰ کار انجام‌شده</strong></div></article>
+          </div>
+          <div class="section-heading task-heading"><div><div class="section-kicker">فهرست روز</div><h2>کارهای امروز <span class="count-pill" id="today-task-count">۰</span></h2></div><div class="heading-actions"><button class="button button-quiet" id="view-all-tasks">مشاهده همه <span data-icon="arrow-left"></span></button><button class="button button-dark" id="add-task-top"><span data-icon="plus"></span> کار جدید</button></div></div>
+          <div class="today-layout">
+            <div class="task-panel panel"><div class="panel-head"><div class="segmented" id="today-filter"><button class="selected" data-filter="all">همه</button><button data-filter="todo">باز</button><button data-filter="done">انجام‌شده</button></div><button class="icon-btn tiny" id="today-sort" title="مرتب‌سازی"><span data-icon="arrow-down-up"></span></button></div><div id="today-task-list" class="task-list"></div><div id="today-empty" class="empty-state hidden"><span class="empty-illustration" data-icon="inbox"></span><strong>امروز فضای خالی داری.</strong><p>یک کار کوچک اضافه کن و شروع کن.</p><button class="button button-dark" id="empty-add-task"><span data-icon="plus"></span> افزودن اولین کار</button></div><button class="add-inline" id="add-task-inline"><span data-icon="plus-circle"></span> افزودن کار جدید</button></div>
+            <aside class="timeline-panel panel"><div class="panel-head"><div><div class="section-kicker">زمان‌بندی</div><h3>نقشه‌ی امروز</h3></div><button class="icon-btn tiny" id="timeline-refresh" aria-label="به‌روزرسانی تایم‌لاین"><span data-icon="refresh"></span></button></div><div class="timeline-summary"><span><i class="legend-dot scheduled"></i>برنامه‌ریزی‌شده</span><span><i class="legend-dot now"></i>زمان اکنون</span></div><div class="timeline" id="timeline"><div class="timeline-hours" id="timeline-hours"></div><div class="timeline-track" id="timeline-track"><div class="now-line" id="now-line"><span>اکنون</span></div><div class="timeline-events" id="timeline-events"></div></div></div><div class="timeline-footer"><span data-icon="clock"></span><span id="timeline-free-time">زمان‌بندی هنوز خالیه.</span></div></aside>
+          </div>
+        </section>
+
+        <section id="view-calendar" class="view">
+          <div class="page-title-row"><div><div class="eyebrow">نمای کلی زمان</div><h1>تقویم <span class="heading-accent">تو</span></h1><p class="subheading">قرارها و کارها را در کنار هم ببین.</p></div><div class="calendar-controls"><div class="segmented" id="calendar-mode"><button data-mode="month" class="selected">ماه</button><button data-mode="week">هفته</button></div><div class="calendar-pref segmented" id="calendar-pref"><button data-cal="jalali" class="selected">شمسی</button><button data-cal="gregorian">میلادی</button></div></div></div>
+          <div class="calendar-panel panel"><div class="calendar-toolbar"><div class="calendar-month-label"><h2 id="calendar-month-title">—</h2><span id="calendar-subtitle"></span></div><div class="calendar-toolbar-actions"><button class="icon-btn" id="calendar-today">امروز</button><button class="icon-btn" id="calendar-prev" aria-label="ماه قبل"><span data-icon="chevron-right"></span></button><button class="icon-btn" id="calendar-next" aria-label="ماه بعد"><span data-icon="chevron-left"></span></button></div></div><div class="calendar-grid" id="calendar-grid"></div></div>
+          <div class="section-heading calendar-day-heading"><div><div class="section-kicker">برنامه‌ی روز انتخاب‌شده</div><h2 id="selected-day-title">کارهای این روز</h2></div><button class="button button-dark" id="add-calendar-task"><span data-icon="plus"></span> افزودن کار</button></div><div id="calendar-day-list" class="calendar-day-list panel"></div>
+        </section>
+
+        <section id="view-tasks" class="view">
+          <div class="page-title-row"><div><div class="eyebrow">همه‌چیز یک‌جا</div><h1>همه‌ی <span class="heading-accent">کارها</span></h1><p class="subheading">سبک نگه دار، شفاف برنامه‌ریزی کن.</p></div><button class="button button-dark" id="add-task-list"><span data-icon="plus"></span> آیتم جدید</button></div>
+          <div class="filters-panel panel"><div class="filter-tabs" id="task-status-filter"><button class="selected" data-status="all">همه <span id="filter-all-count">۰</span></button><button data-status="todo">باز <span id="filter-todo-count">۰</span></button><button data-status="doing">در حال انجام <span id="filter-doing-count">۰</span></button><button data-status="done">انجام‌شده <span id="filter-done-count">۰</span></button></div><div class="filter-row"><label class="filter-select"><span data-icon="layers"></span><select id="list-category-filter"><option value="all">همه‌ی دسته‌ها</option></select></label><label class="filter-select"><span data-icon="calendar"></span><select id="list-date-filter"><option value="all">هر تاریخی</option><option value="today">امروز</option><option value="week">این هفته</option><option value="overdue">عقب‌افتاده</option><option value="none">بدون زمان</option></select></label><label class="filter-select"><span data-icon="sliders"></span><select id="list-priority-filter"><option value="all">هر اولویتی</option><option value="high">زیاد</option><option value="medium">متوسط</option><option value="low">کم</option></select></label></div></div>
+          <div class="list-toolbar"><span id="list-results-label">همه‌ی آیتم‌ها</span><div><button class="icon-btn tiny" id="toggle-archived"><span data-icon="archive"></span> <span>آرشیو</span></button><button class="icon-btn tiny" id="toggle-trash"><span data-icon="trash"></span> <span>سطل زباله</span></button></div></div><div id="all-task-list" class="all-task-list"></div>
+        </section>
+
+        <section id="view-insights" class="view">
+          <div class="page-title-row"><div><div class="eyebrow">تصویر بزرگ‌تر</div><h1>آمار و <span class="heading-accent">عملکرد</span></h1><p class="subheading">پیشرفت را ببین؛ لازم نیست کامل باشی.</p></div><select class="period-select" id="insight-period"><option value="week">۷ روز گذشته</option><option value="month">۳۰ روز گذشته</option></select></div>
+          <div class="insight-kpis"><article class="kpi-card panel"><span class="kpi-label">کارهای تکمیل‌شده</span><strong id="insight-completed">۰</strong><span id="insight-completed-delta" class="kpi-caption">در بازه‌ی انتخابی</span></article><article class="kpi-card panel"><span class="kpi-label">نرخ تکمیل</span><strong id="insight-rate">۰٪</strong><span class="kpi-caption">از کل کارهای ثبت‌شده</span></article><article class="kpi-card panel"><span class="kpi-label">زمان تمرکز</span><strong id="insight-time">۰<span>دقیقه</span></strong><span class="kpi-caption">ثبت‌شده با زمان‌سنج</span></article><article class="kpi-card panel"><span class="kpi-label">روزهای پیوسته</span><strong id="insight-streak">۰</strong><span class="kpi-caption">پیوستگی فعلی</span></article></div>
+          <div class="charts-grid"><article class="chart-card panel"><div class="chart-header"><div><div class="section-kicker">ثبات در طول زمان</div><h3>کارهای تکمیل‌شده</h3></div><span class="chart-legend"><i></i>تعداد کار</span></div><div class="bar-chart" id="completion-chart"></div></article><article class="chart-card panel"><div class="chart-header"><div><div class="section-kicker">توزیع زمان</div><h3>زمان بر اساس دسته</h3></div><span class="chart-period-caption">زمان‌سنج واقعی</span></div><div id="category-chart" class="category-chart"></div></article></div>
+          <article class="heatmap-card panel"><div class="chart-header"><div><div class="section-kicker">حضور مداوم</div><h3>نقشه‌ی فعالیت</h3></div><span class="chart-period-caption">۳۰ روز گذشته</span></div><div id="activity-heatmap" class="activity-heatmap"></div><div class="heatmap-legend"><span>کمتر</span><i class="heat-0"></i><i class="heat-1"></i><i class="heat-2"></i><i class="heat-3"></i><i class="heat-4"></i><span>بیشتر</span></div></article>
+        </section>
+
+        <section id="view-settings" class="view">
+          <div class="page-title-row"><div><div class="eyebrow">به سلیقه‌ی تو</div><h1>تنظیمات <span class="heading-accent">RUHA</span></h1><p class="subheading">فضای کاری خودت را تنظیم کن.</p></div></div>
+          <div class="settings-layout"><div class="settings-nav panel"><button class="selected" data-settings="appearance"><span data-icon="sun-moon"></span> ظاهر و نمایش</button><button data-settings="calendar"><span data-icon="calendar"></span> تقویم و زمان</button><button data-settings="notifications"><span data-icon="bell"></span> اعلان‌ها</button><button data-settings="data"><span data-icon="database"></span> داده‌ها و حریم خصوصی</button><button data-settings="about"><span data-icon="info"></span> درباره‌ی RUHA</button></div><div class="settings-content panel" id="settings-content"></div></div>
+        </section>
+      </div>
+      <footer class="app-footer"><span>RUHA <span class="footer-dot">·</span> برای روزهایی با ذهن آرام‌تر</span><span id="last-saved-label">ذخیره‌ی خودکار فعال است</span></footer>
+    </main>
+  </div>
+
+  <nav class="mobile-bottom-nav" aria-label="ناوبری موبایل"><button class="active" data-view="today"><span data-icon="sun"></span><small>امروز</small></button><button data-view="calendar"><span data-icon="calendar"></span><small>تقویم</small></button><button data-view="tasks"><span data-icon="check-square"></span><small>کارها</small></button><button data-view="insights"><span data-icon="chart"></span><small>آمار</small></button><button data-view="settings"><span data-icon="settings"></span><small>تنظیمات</small></button></nav>
+  <button class="fab" id="fab-add" aria-label="افزودن سریع"><span data-icon="plus"></span></button>
+  <div class="toast-region" id="toast-region" aria-live="polite" aria-atomic="true"></div>
+
+  <dialog id="item-dialog" class="item-dialog"><form id="item-form" method="dialog"><div class="dialog-head"><div><div class="eyebrow" id="dialog-eyebrow">ثبت یک قدم تازه</div><h2 id="dialog-title">آیتم جدید</h2></div><button type="button" class="icon-btn" id="dialog-close" aria-label="بستن"><span data-icon="x"></span></button></div><input type="hidden" id="item-id"><div class="type-selector" id="item-type-selector"><button type="button" class="selected" data-type="task"><span data-icon="check-square"></span> کار</button><button type="button" data-type="reminder"><span data-icon="bell"></span> یادآور</button><button type="button" data-type="note"><span data-icon="file-text"></span> یادداشت</button></div><label class="field-label" for="item-title">عنوان <span class="required-mark">*</span></label><input id="item-title" class="text-field title-field" maxlength="180" placeholder="مثلاً: مطالعه‌ی شبکه‌های عصبی" required autocomplete="off"><label class="field-label" for="item-description">توضیحات <span class="optional-label">اختیاری</span></label><textarea id="item-description" class="text-field description-field" rows="2" placeholder="چیزی که می‌خواهی به خاطر بسپاری…"></textarea><div class="form-two-col"><div><label class="field-label" for="item-due">تاریخ و ساعت <span class="optional-label">اختیاری</span></label><input id="item-due" class="text-field" type="datetime-local"><small class="field-help" id="date-preview"></small></div><div><label class="field-label" for="item-duration">مدت تخمینی</label><div class="input-with-unit"><input id="item-duration" class="text-field" type="number" min="5" max="1440" step="5" placeholder="۳۰"><span>دقیقه</span></div></div></div><div class="form-two-col"><div><label class="field-label" for="item-category">دسته‌بندی</label><select id="item-category" class="text-field"></select></div><div><label class="field-label" for="item-priority">اولویت</label><select id="item-priority" class="text-field"><option value="low">کم</option><option value="medium" selected>متوسط</option><option value="high">زیاد</option></select></div></div><div class="form-two-col" id="reminder-fields"><div><label class="field-label" for="item-remind">یادآوری</label><select id="item-remind" class="text-field"><option value="0">سرِ وقت</option><option value="5">۵ دقیقه قبل</option><option value="10" selected>۱۰ دقیقه قبل</option><option value="30">۳۰ دقیقه قبل</option><option value="60">۱ ساعت قبل</option><option value="1440">۱ روز قبل</option></select></div><div><label class="field-label" for="item-repeat">تکرار</label><select id="item-repeat" class="text-field"><option value="none">بدون تکرار</option><option value="daily">هر روز</option><option value="weekdays">روزهای کاری</option><option value="weekly">هر هفته</option><option value="monthly">هر ماه</option><option value="yearly">هر سال</option></select></div></div><div class="attachment-row"><div class="attachment-buttons"><button type="button" class="attachment-button" id="attach-image"><span data-icon="image"></span> افزودن عکس</button><button type="button" class="attachment-button" id="record-audio"><span data-icon="mic"></span> <span id="record-audio-label">ضبط ویس</span></button><input id="item-image-input" type="file" accept="image/*" capture="environment" hidden><input id="item-file-input" type="file" accept="image/*,audio/*" multiple hidden></div><div id="attachment-list" class="attachment-list"></div><div id="recording-status" class="recording-status hidden"><span class="recording-dot"></span><span>در حال ضبط صدا…</span><span id="recording-timer">۰۰:۰۰</span><button type="button" id="stop-recording" class="button button-small button-quiet">پایان ضبط</button></div></div><div class="dialog-actions"><button type="button" class="button button-quiet" id="dialog-cancel">انصراف</button><button type="submit" class="button button-dark" id="item-save-button"><span data-icon="check"></span> ذخیره‌ی آیتم</button></div></form></dialog>
+
+  <dialog id="category-dialog" class="small-dialog"><form id="category-form" method="dialog"><div class="dialog-head"><div><div class="eyebrow">سازمان‌دهی ساده</div><h2>دسته‌ی جدید</h2></div><button type="button" class="icon-btn" data-close-dialog="category-dialog" aria-label="بستن"><span data-icon="x"></span></button></div><label class="field-label" for="category-name">نام دسته</label><input class="text-field" id="category-name" maxlength="40" placeholder="مثلاً: دانشگاه" required><label class="field-label">رنگ</label><div class="color-options" id="category-colors"><button type="button" class="color-choice selected" data-color="#64748b" style="--swatch:#64748b" aria-label="خاکستری"></button><button type="button" class="color-choice" data-color="#0f766e" style="--swatch:#0f766e" aria-label="سبزآبی"></button><button type="button" class="color-choice" data-color="#b45309" style="--swatch:#b45309" aria-label="کهربایی"></button><button type="button" class="color-choice" data-color="#7c3aed" style="--swatch:#7c3aed" aria-label="بنفش"></button><button type="button" class="color-choice" data-color="#be123c" style="--swatch:#be123c" aria-label="صورتی تیره"></button><button type="button" class="color-choice" data-color="#2563eb" style="--swatch:#2563eb" aria-label="آبی"></button><button type="button" class="color-choice" data-color="#4d7c0f" style="--swatch:#4d7c0f" aria-label="زیتونی"></button></div><div class="dialog-actions"><button type="button" class="button button-quiet" data-close-dialog="category-dialog">انصراف</button><button type="submit" class="button button-dark">ساخت دسته</button></div></form></dialog>
+
+  <dialog id="detail-dialog" class="detail-dialog"><div id="detail-content"></div></dialog>
+
+  <script src="./static/ruha/app.js" defer></script>
+</body>
+</html>
